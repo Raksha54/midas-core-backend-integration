@@ -1,0 +1,12 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092  # You don't need to specify this with embedded Kafka, so you can skip it.
+      group-id: midas-core-consumer
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+    listener:
+      id: transactionListener
+    properties:
+      spring.kafka.consumer.value-deserializer: org.springframework.kafka.serializer.JsonDeserializer
+    topic: transactions  # You can replace this with the actual topic name

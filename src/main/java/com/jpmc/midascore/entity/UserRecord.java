@@ -1,46 +1,34 @@
 package com.jpmc.midascore.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class UserRecord {
-
     @Id
-    @GeneratedValue()
-    private long id;
+    private String id; // Changed from Long to String based on your usage
 
-    @Column(nullable = false)
-    private String name;
+    private Float balance;
 
-    @Column(nullable = false)
-    private float balance;
+    @OneToMany(mappedBy = "sender")
+    private List<TransactionRecord> sentTransactions;
 
-    protected UserRecord() {
-    }
+    @OneToMany(mappedBy = "recipient")
+    private List<TransactionRecord> receivedTransactions;
 
-    public UserRecord(String name, float balance) {
-        this.name = name;
+    // Add this constructor
+    public UserRecord(String id, Float balance) {
+        this.id = id;
         this.balance = balance;
     }
 
-    @Override
-    public String toString() {
-        return String.format("User[id=%d, name='%s', balance='%f'", id, name, balance);
+    // Default constructor required by JPA
+    public UserRecord() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public float getBalance() {
-        return balance;
-    }
-
-    public void setBalance(float balance) {
-        this.balance = balance;
-    }
+    // Getters and Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+    public Float getBalance() { return balance; }
+    public void setBalance(Float balance) { this.balance = balance; }
 }
